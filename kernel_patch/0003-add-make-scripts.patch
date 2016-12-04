@@ -1,0 +1,49 @@
+From 4156748df38273c7f4082c033cfc7119042c7911 Mon Sep 17 00:00:00 2001
+From: Andreas Weschenfelder <a_weschenfelder@web.de>
+Date: Sun, 4 Dec 2016 11:42:01 +0100
+Subject: [PATCH 3/4] add make scripts
+
+---
+ make_me.sh      | 8 ++++++++
+ make_modules.sh | 2 ++
+ make_xconfig.sh | 4 ++++
+ 3 files changed, 14 insertions(+)
+ create mode 100755 make_me.sh
+ create mode 100755 make_modules.sh
+ create mode 100755 make_xconfig.sh
+
+diff --git a/make_me.sh b/make_me.sh
+new file mode 100755
+index 0000000..c2b52a5
+--- /dev/null
++++ b/make_me.sh
+@@ -0,0 +1,8 @@
++make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- gatewaybox_defconfig
++make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
++make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- imx6dl-tx6s-8034.dtb
++cat arch/arm/boot/zImage arch/arm/boot/dts/imx6dl-tx6s-8034.dtb > zImage_w_dtb
++mkimage -A arm -O linux -T kernel -C none -a 0x11000000 -e 0x11000000 -n 'linuxGateway2015' -d zImage_w_dtb uImage_w_dtb
++
++
++
+diff --git a/make_modules.sh b/make_modules.sh
+new file mode 100755
+index 0000000..2d7308a
+--- /dev/null
++++ b/make_modules.sh
+@@ -0,0 +1,2 @@
++make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- modules
++make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- modules_install INSTALL_MOD_PATH=my_modules
+diff --git a/make_xconfig.sh b/make_xconfig.sh
+new file mode 100755
+index 0000000..a494057
+--- /dev/null
++++ b/make_xconfig.sh
+@@ -0,0 +1,4 @@
++make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- xconfig
++
++
++
+-- 
+2.5.0
+
